@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Todo Details
+{% endblock %}
+
+{% block content %}
+<h2>{{ todo }}</h2>
+<p>{{ todo.details }}</p>
+<p>{{ todo.date_created }}</p>
+<a href="{% url 'update' todo.id %}">Edit</a>
+<a href="{% url 'delete' todo.id %}">Delete</a>
+{% endblock %}
