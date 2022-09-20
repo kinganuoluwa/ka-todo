@@ -40,16 +40,15 @@ python manage.py migrate
 * ### **Create**
 ```python
 def todo_create(request):
-    form = CreateForm()
+    form = CreateForm(request.POST or None)
     if request.method == 'POST':
-        form = CreateForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/todos')
     context = {
         'form':form
         }
-    return render(request, 'todo-add.html', context)
+    return render(request, 'todo-create.html', context)
 ```
 
 * ### **Read**
@@ -69,9 +68,8 @@ def todo_details(request, id):
 ```python
 def todo_update(request, id):
     todo = Todo.objects.get(id=id)
-    form = CreateForm(instance=todo)
+    form = CreateForm(request.POST or None, instance=todo)
     if request.method == 'POST':
-        form = CreateForm(request.POST, instance=todo)
         if form.is_valid():
             form.save()
             return redirect('/todos')
