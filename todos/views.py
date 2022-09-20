@@ -15,9 +15,8 @@ def todo_details(request, id):
     return render(request, 'todo-detail.html', context)
 
 def todo_create(request):
-    form = CreateForm()
+    form = CreateForm(request.POST or None)
     if request.method == 'POST':
-        form = CreateForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/todos')
@@ -28,9 +27,8 @@ def todo_create(request):
 
 def todo_update(request, id):
     todo = Todo.objects.get(id=id)
-    form = CreateForm(instance=todo)
+    form = CreateForm(request.POST or None, instance=todo)
     if request.method == 'POST':
-        form = CreateForm(request.POST, instance=todo)
         if form.is_valid():
             form.save()
             return redirect('/todos')
